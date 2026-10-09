@@ -1,0 +1,55 @@
+{
+  "name": "trace-code-generator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "追溯码生成器",
+  "author": "trace-code-generator",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "dist": "powershell -ExecutionPolicy Bypass -File scripts/build-exe.ps1",
+    "electron": "npm run build && electron .",
+    "electron:dist": "npm run build && electron-builder --win portable"
+  },
+  "dependencies": {
+    "next": "^15.5.4",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.6",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "typescript": "^5.9.2"
+  },
+  "build": {
+    "appId": "com.trace.code-generator",
+    "productName": "追溯码生成器",
+    "directories": {
+      "output": "release/electron"
+    },
+    "files": [
+      "electron/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "out",
+        "to": "out"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-${version}-portable.${ext}"
+    }
+  }
+}
